@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "This is a to do list application made with Javascript",
   "main": "index.js",
+  "private": "true",
   "scripts": {
-    "start": "webpack",
-    "build": "webpack"
+    "start": "webpack-dev-server --config webpack.dev.js --open",
+    "build": "webpack --config webpack.prod.js",
+    "compile:sass": "sass --watch src/sass:src/assets/css"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,16 @@
   "bugs": {
     "url": "https://github.com/Leboroz/to-do-list/issues"
   },
-  "homepage": "https://github.com/Leboroz/to-do-list#readme"
+  "homepage": "https://github.com/Leboroz/to-do-list#readme",
+  "devDependencies": {
+    "css-loader": "^6.5.1",
+    "html-webpack-plugin": "^5.5.0",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2",
+    "webpack-merge": "^5.8.0"
+  }
 }
