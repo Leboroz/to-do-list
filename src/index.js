@@ -3,14 +3,23 @@ import TodoList from './components/todolist';
 import deleteTodoItem from './components/utils/delete';
 import moveTodoItem from './components/utils/move';
 import LocalStorage from './components/local-storage';
+import TodoItem from './components/todoitem';
 
 const list = document.querySelector('#list');
-
-if (LocalStorage.get()) {
-  TodoList.list = LocalStorage.get();
-  TodoList.list.forEach((item, index) => {
-    const ele = TodoList.createTodoElement(index); //* last element from list
-    list.insertBefore(ele, list.lastChild);
+const localStorageList = LocalStorage.get();
+if (localStorageList && localStorageList.length > 0) {
+  TodoList.list = localStorageList.map((item) => {
+    const createdTodoItem = new TodoItem(
+      item.description,
+      TodoList.uniqueId,
+      item.compleated,
+    );
+    TodoItem.uniqueId += 1;
+    return createdTodoItem;
+  });
+  TodoList.uniqueId = TodoList.list[TodoList.list.length - 1].id + 1;
+  TodoList.list.forEach((item) => {
+    list.insertBefore(item.createTodoElement(), list.lastChild);
   });
 }
 
@@ -19,8 +28,10 @@ const addInput = document.querySelector('#add_input');
 addInput.addEventListener('keyup', (e) => {
   if (e.key === 'Enter') {
     //* if enter is pressed
-    if (TodoList.addTodoItem(e.target.value)) {
-      const ele = TodoList.createTodoElement(TodoList.list.length - 1); //* last element from list
+    if (TodoList.addTodoItem(e.target.value, TodoList.uniqueId)) {
+      TodoList.uniqueId += 1;
+      //* last element from list
+      const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
       list.insertBefore(ele, list.lastChild);
       e.target.value = '';
       LocalStorage.add(TodoList.list);
@@ -32,10 +43,12 @@ const changeIcon = (container) => {
   const button = container.querySelector('.fas');
   button.classList.toggle('fa-ellipsis-v');
   button.classList.toggle('fa-trash-alt');
+
   if (button.className.includes('fa-ellipsis-v')) {
     button.removeEventListener('click', deleteTodoItem);
     button.addEventListener('click', moveTodoItem);
   }
+
   if (button.className.includes('fa-trash-alt')) {
     button.removeEventListener('click', moveTodoItem);
     button.addEventListener('click', deleteTodoItem);
@@ -45,6 +58,7 @@ const changeIcon = (container) => {
 document.addEventListener('click', (e) => {
   const element = e.target.closest('.list-item__item');
   const current = list.querySelector('li[aria-current="true"]');
+
   if (element) {
     if (element.ariaCurrent === 'false' && current) {
       current.setAttribute('aria-current', 'false');
@@ -67,15 +81,10 @@ button.innerHTML = `
 <button class="btn" type="button">Clear all completed</button>`;
 button.addEventListener('click', () => {
   const items = Array.from(list.querySelectorAll('.list-item__item'));
-  items.forEach((item) => {
-    if (item.querySelector('#check').checked) {
-      const itemToDelete = item.querySelector('#todo_item_description').value;
-      item.remove();
-      for (let i = 0; i < TodoList.list; i += 1) {
-        if (TodoList.list[i].description === itemToDelete) {
-          TodoList.remove(TodoList.list.indexOf(TodoList.list[i]));
-        }
-      }
+  items.forEach((element) => {
+    if (element.querySelector('#check').checked) {
+      TodoList.removeFromId(element.id);
+      element.remove();
     }
   });
   LocalStorage.add(TodoList.list);

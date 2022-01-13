@@ -6,7 +6,6 @@ const deleteTodoItem = (element) => {
   const index = Array.from(
     document.querySelectorAll('.list-item__item'),
   ).indexOf(container);
-  console.log(index);
   container.remove();
   TodoList.remove(index);
   LocalStorage.add(TodoList.list);
