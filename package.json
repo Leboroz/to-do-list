@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/Leboroz/to-do-list/issues"
   },
-  "homepage": "https://github.com/Leboroz/to-do-list#readme",
+  "homepage": "https://github.com/Leboroz/to-do-list/docs#index.html",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
