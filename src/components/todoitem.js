@@ -23,7 +23,7 @@ export default class TodoItem {
     const inputDescription = liElement.querySelector('#todo_item_description');
     inputDescription.addEventListener('change', (e) => {
       if (e.target.value === '') {
-        this.list.removeFromId(e.target.id);
+        this.list.removeFromId(Number(e.target.id));
         e.target.parentNode.parentNode.parentNode.remove();
       }
     });

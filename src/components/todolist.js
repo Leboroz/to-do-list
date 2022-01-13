@@ -20,7 +20,7 @@ export default class TodoList {
   }
 
   static removeFromId(id) {
-    const foundIndex = this.list.findIndex((item) => Number(item.id) === id);
+    const foundIndex = this.list.findIndex((item) => item.id === id);
     return this.remove(foundIndex);
   }
 
