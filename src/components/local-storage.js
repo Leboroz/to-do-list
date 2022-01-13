@@ -1,5 +1,3 @@
-import TodoList from './todolist';
-
 export default class LocalStorage {
   //* creates list in local storage
   static add(element) {
@@ -14,9 +12,5 @@ export default class LocalStorage {
   //* gets list in local storage
   static get() {
     return JSON.parse(localStorage.getItem('list'));
-  }
-
-  static update() {
-    this.add(TodoList.list);
   }
 }

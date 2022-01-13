@@ -1,3 +1,5 @@
+import checkHandler from './utils/check';
+
 export default class TodoItem {
   constructor(description, id, completed = false) {
     this.description = description;
@@ -37,10 +39,7 @@ export default class TodoItem {
     }
     check.addEventListener('change', (e) => {
       this.completed = !this.completed;
-      //* if checkbox is checked input is disabled
-      if (e.target.checked) input.setAttribute('disabled', 'true');
-      //* if checkbox is not checked input is enabled
-      else if (!e.target.checked) input.removeAttribute('disabled');
+      checkHandler(e, input);
     });
 
     this.element = liElement;

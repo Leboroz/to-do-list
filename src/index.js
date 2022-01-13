@@ -33,7 +33,6 @@ addInput.addEventListener('keyup', (e) => {
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
       list.insertBefore(ele, list.lastChild);
       e.target.value = '';
-      LocalStorage.update();
     }
   }
 });
@@ -86,7 +85,6 @@ button.addEventListener('click', () => {
       element.remove();
     }
   });
-  LocalStorage.update();
 });
 
 list.appendChild(button);
