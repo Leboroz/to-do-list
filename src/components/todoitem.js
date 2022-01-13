@@ -12,13 +12,9 @@ export default class TodoItem {
     liElement.className = 'list-item list-item__item';
     liElement.setAttribute('aria-current', 'false');
     liElement.innerHTML = `<div class="wrapper">
-    <input id="check"  class="checkbox" type="checkbox" name="completed" ${
-  this.completed === true ? 'completed' : ''
-}>
+    <input id="check"  class="checkbox" type="checkbox" name="completed">
     <label class="label">
-      <input id="todo_item_description" class="todo-item-description" name="todoItemDescription" type="text" value="${
-  this.description
-}">
+      <input id="todo_item_description" class="todo-item-description" name="todoItemDescription" type="text" value="${this.description}">
       <i class="fas fa-ellipsis-v"></i>
     </label>
   </div>
@@ -34,9 +30,13 @@ export default class TodoItem {
 
     //* checkbox event
     const check = liElement.querySelector('#check');
+    const input = liElement.querySelector('#todo_item_description'); // *list item input
+    if (this.completed) {
+      check.checked = true;
+      input.setAttribute('disabled', 'true');
+    }
     check.addEventListener('change', (e) => {
       this.completed = !this.completed;
-      const input = e.target.parentNode.querySelector('#todo_item_description'); // *list item input
       //* if checkbox is checked input is disabled
       if (e.target.checked) input.setAttribute('disabled', 'true');
       //* if checkbox is not checked input is enabled

@@ -12,7 +12,7 @@ if (localStorageList && localStorageList.length > 0) {
     const createdTodoItem = new TodoItem(
       item.description,
       TodoList.uniqueId,
-      item.compleated,
+      item.completed,
     );
     TodoItem.uniqueId += 1;
     return createdTodoItem;
@@ -22,7 +22,6 @@ if (localStorageList && localStorageList.length > 0) {
     list.insertBefore(item.createTodoElement(), list.lastChild);
   });
 }
-
 const addInput = document.querySelector('#add_input');
 
 addInput.addEventListener('keyup', (e) => {
@@ -34,7 +33,7 @@ addInput.addEventListener('keyup', (e) => {
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
       list.insertBefore(ele, list.lastChild);
       e.target.value = '';
-      LocalStorage.add(TodoList.list);
+      LocalStorage.update();
     }
   }
 });
@@ -87,7 +86,7 @@ button.addEventListener('click', () => {
       element.remove();
     }
   });
-  LocalStorage.add(TodoList.list);
+  LocalStorage.update();
 });
 
 list.appendChild(button);
