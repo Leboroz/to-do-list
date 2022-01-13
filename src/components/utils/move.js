@@ -1,3 +1,3 @@
-const moveTodoItem = (element) => {}
+const moveTodoItem = () => {};
 
-export default moveTodoItem
+export default moveTodoItem;
