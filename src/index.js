@@ -4,22 +4,54 @@ import deleteTodoItem from './components/utils/delete';
 import moveTodoItem from './components/utils/move';
 import LocalStorage from './components/local-storage';
 import TodoItem from './components/todoitem';
+import checkHandler from './components/utils/check';
 
 const list = document.querySelector('#list');
 const localStorageList = LocalStorage.get();
-if (localStorageList && localStorageList.length > 0) {
-  TodoList.list = localStorageList.map((item) => {
-    const createdTodoItem = new TodoItem(
-      item.description,
-      TodoList.uniqueId,
-      item.completed,
-    );
-    TodoItem.uniqueId += 1;
-    return createdTodoItem;
+
+const appendEvents = (ele) => {
+  //* onchange event for the input
+  const inputDescription = ele.querySelector('#todo_item_description');
+
+  inputDescription.addEventListener('change', (e) => {
+    const elementIndex = TodoList.getFromId(Number(ele.id));
+    if (e.target.value === '') {
+      TodoList.removeFromId(Number(ele.id));
+      e.target.parentNode.parentNode.parentNode.remove();
+    } else if (e.target.value !== TodoList.list[elementIndex].description) {
+      TodoList.list[elementIndex].description = e.target.value;
+      LocalStorage.update();
+    }
   });
+
+  //* checkbox event
+  const check = ele.querySelector('#check');
+  const input = ele.querySelector('#todo_item_description'); // *list item input
+  const elementIndex = TodoList.getFromId(Number(ele.id));
+  const { completed } = TodoList.list[elementIndex];
+  if (completed) {
+    check.checked = true;
+    input.setAttribute('disabled', 'true');
+  }
+
+  check.addEventListener('change', (e) => {
+    TodoList.check(elementIndex);
+    checkHandler(e, input);
+    LocalStorage.update();
+  });
+
+  list.insertBefore(ele, list.lastChild);
+};
+
+if (localStorageList && localStorageList.length > 0) {
+  TodoList.list = localStorageList.map(
+    (item) => new TodoItem(item.description, item.id, item.completed),
+  );
   TodoList.uniqueId = TodoList.list[TodoList.list.length - 1].id + 1;
+
   TodoList.list.forEach((item) => {
-    list.insertBefore(item.createTodoElement(), list.lastChild);
+    const ele = item.createTodoElement();
+    appendEvents(ele);
   });
 }
 const addInput = document.querySelector('#add_input');
@@ -31,9 +63,9 @@ addInput.addEventListener('keyup', (e) => {
       TodoList.uniqueId += 1;
       //* last element from list
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
-      list.insertBefore(ele, list.lastChild);
-      e.target.value = '';
+      appendEvents(ele);
       LocalStorage.update();
+      e.target.value = '';
     }
   }
 });

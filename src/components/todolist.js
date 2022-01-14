@@ -19,9 +19,16 @@ export default class TodoList {
     return true;
   }
 
+  static getFromId(id) {
+    return this.list.findIndex((item) => item.id === id);
+  }
+
   static removeFromId(id) {
-    const foundIndex = this.list.findIndex((item) => item.id === id);
-    return this.remove(foundIndex);
+    return this.remove(this.getFromId(id));
+  }
+
+  static check(index) {
+    this.list[index].completed = !this.list[index].completed;
   }
 
   //* updates the description of the element using it's index position
