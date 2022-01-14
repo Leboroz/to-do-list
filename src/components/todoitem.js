@@ -1,5 +1,3 @@
-import checkHandler from './utils/check';
-
 export default class TodoItem {
   constructor(description, id, completed = false) {
     this.description = description;
@@ -21,28 +19,6 @@ export default class TodoItem {
     </label>
   </div>
   `;
-    //* onchange event for the input
-    const inputDescription = liElement.querySelector('#todo_item_description');
-    inputDescription.addEventListener('change', (e) => {
-      if (e.target.value === '') {
-        this.list.removeFromId(Number(e.target.id));
-        e.target.parentNode.parentNode.parentNode.remove();
-      }
-    });
-
-    //* checkbox event
-    const check = liElement.querySelector('#check');
-    const input = liElement.querySelector('#todo_item_description'); // *list item input
-    if (this.completed) {
-      check.checked = true;
-      input.setAttribute('disabled', 'true');
-    }
-    check.addEventListener('change', (e) => {
-      this.completed = !this.completed;
-      checkHandler(e, input);
-    });
-
-    this.element = liElement;
-    return this.element;
+    return liElement;
   }
 }

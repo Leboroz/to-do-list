@@ -8,7 +8,7 @@ const deleteTodoItem = (element) => {
   ).indexOf(container);
   container.remove();
   TodoList.remove(index);
-  LocalStorage.add(TodoList.list);
+  LocalStorage.update();
 };
 
 export default deleteTodoItem;

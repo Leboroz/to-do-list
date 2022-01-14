@@ -1,4 +1,3 @@
-import LocalStorage from './local-storage';
 import TodoItem from './todoitem';
 
 export default class TodoList {
@@ -10,7 +9,6 @@ export default class TodoList {
   static addTodoItem(description, compleated = false) {
     if (description.length < 1) return false;
     this.list.push(new TodoItem(description, compleated));
-    LocalStorage.add(this.list);
     return true;
   }
 
@@ -18,13 +16,19 @@ export default class TodoList {
   static remove(index) {
     if (index < 0) return false;
     this.list.splice(index, 1);
-    LocalStorage.add(this.list);
     return true;
   }
 
+  static getFromId(id) {
+    return this.list.findIndex((item) => item.id === id);
+  }
+
   static removeFromId(id) {
-    const foundIndex = this.list.findIndex((item) => item.id === id);
-    return this.remove(foundIndex);
+    return this.remove(this.getFromId(id));
+  }
+
+  static check(index) {
+    this.list[index].completed = !this.list[index].completed;
   }
 
   //* updates the description of the element using it's index position
