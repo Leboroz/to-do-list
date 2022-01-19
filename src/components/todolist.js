@@ -1,9 +1,9 @@
-import TodoItem from './todoitem';
+import TodoItem from "./todoitem";
 
 export default class TodoList {
-  static list = []
+  static list = [];
 
-  static uniqueId = 0
+  static uniqueId = 0;
 
   //* add an item to the list
   static addTodoItem(description, compleated = false) {
@@ -19,10 +19,12 @@ export default class TodoList {
     return true;
   }
 
+  //* get id of element
   static getFromId(id) {
     return this.list.findIndex((item) => item.id === id);
   }
 
+  //* remove an item to the list with the id
   static removeFromId(id) {
     return this.remove(this.getFromId(id));
   }
