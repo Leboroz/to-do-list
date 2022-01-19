@@ -1,4 +1,4 @@
-import TodoList from "../components/todolist";
+import TodoList from "../../components/todolist";
 
 describe("Adding an item to TodoList", () => {
   test("Add 1 item to the list", () => {
@@ -26,5 +26,16 @@ describe("Adding an item to TodoList", () => {
     );
 
     TodoList.list = [];
+  });
+});
+
+describe("Delete item from TodoList", () => {
+  test("Delete an item from list", () => {
+    const description = "First to delete";
+
+    TodoList.addTodoItem(description);
+    const expected = TodoList.remove(0);
+
+    expect(expected).toBe(true);
   });
 });
