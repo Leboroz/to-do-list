@@ -1,3 +1,16 @@
-import list from "../../mock-list";
+// jest.mock('../../../index')
+import TodoList from '../../../components/todolist'
+import addToDOM from '../../../components/utils/add'
+import list from '../../mock-list'
 
-console.log(list);
+describe('Add an item to the DOM', () => {
+    test('add an item to mock list', () => {
+        const description = 'mock description 1'
+
+        TodoList.addTodoItem(description, TodoList.uniqueId)
+        const ele = TodoList.list.at(-1).createTodoElement()
+        const expected = addToDOM(list, ele)
+
+        expect(expected).toBe(true)
+    })
+})

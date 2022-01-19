@@ -18,7 +18,7 @@ if (localStorageList && localStorageList.length > 0) {
 
   TodoList.list.forEach((item) => {
     const ele = item.createTodoElement();
-    addToDOM(ele);
+    addToDOM(list, ele);
   });
 }
 const addInput = document.querySelector("#add_input");
@@ -30,7 +30,7 @@ addInput.addEventListener("keyup", (e) => {
       TodoList.uniqueId += 1;
       //* last element from list
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
-      addToDOM(ele);
+      addToDOM(list, ele);
       LocalStorage.update();
       e.target.value = "";
     }

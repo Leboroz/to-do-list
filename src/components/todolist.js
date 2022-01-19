@@ -6,9 +6,9 @@ export default class TodoList {
   static uniqueId = 0;
 
   //* add an item to the list
-  static addTodoItem(description, compleated = false) {
+  static addTodoItem(description, id, compleated = false) {
     if (description.length < 1) return false;
-    this.list.push(new TodoItem(description, compleated));
+    this.list.push(new TodoItem(description, id, compleated));
     return true;
   }
 

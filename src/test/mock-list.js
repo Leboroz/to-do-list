@@ -1,5 +1,2 @@
-const list = document.createElement("ul");
-const item = document.createElement("li");
-
-list.appendChild(item);
+const list = document.createElement('ul')
 export default list;

@@ -9,6 +9,9 @@
     "build": "webpack --config webpack.prod.js",    
     "test": "jest --coverage"
   },
+  "jest":{
+    "testEnvironment": "jsdom"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Leboroz/to-do-list.git"
