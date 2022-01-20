@@ -1,11 +1,18 @@
 import "./sass/index.scss";
 import TodoList from "./components/todolist";
 import deleteTodoItem from "./components/utils/delete";
+<<<<<<< Updated upstream
 import { draggEndHandler, draggStartHandler } from "./components/utils/move";
 import LocalStorage from "./components/local-storage";
 import TodoItem from "./components/todoitem";
 import addToDOM from "./components/utils/add";
 import { container } from "webpack";
+=======
+import moveTodoItem from "./components/utils/move";
+import LocalStorage from "./components/local-storage";
+import TodoItem from "./components/todoitem";
+import addToDOM from "./components/utils/add";
+>>>>>>> Stashed changes
 
 const list = document.querySelector("#list");
 const localStorageList = LocalStorage.get();
@@ -66,12 +73,16 @@ list.addEventListener("dragover", (e) => {
 
 const changeIcon = (container) => {
   const button = container.querySelector(".fas");
+<<<<<<< Updated upstream
   console.log(button);
+=======
+>>>>>>> Stashed changes
   button.classList.toggle("fa-ellipsis-v");
   button.classList.toggle("fa-trash-alt");
 
   if (button.className.includes("fa-ellipsis-v")) {
     button.removeEventListener("click", deleteTodoItemHandler);
+<<<<<<< Updated upstream
     container.addEventListener("dragstart", draggStartHandler);
     container.addEventListener("dragend", draggEndHandler);
   }
@@ -79,15 +90,28 @@ const changeIcon = (container) => {
   if (button.className.includes("fa-trash-alt")) {
     container.removeEventListener("dragstart", draggStartHandler);
     container.removeEventListener("dragend", draggEndHandler);
+=======
+    button.addEventListener("click", moveTodoItem);
+  }
+
+  if (button.className.includes("fa-trash-alt")) {
+    button.removeEventListener("click", moveTodoItem);
+>>>>>>> Stashed changes
     button.addEventListener("click", deleteTodoItemHandler);
   }
 };
 
 document.addEventListener("click", (e) => {
   const element = e.target.closest(".list-item__item");
+<<<<<<< Updated upstream
   const input = e.target.closest(".todo-item-description");
   const current = list.querySelector('li[aria-current="true"]');
   if (input) {
+=======
+  const current = list.querySelector('li[aria-current="true"]');
+
+  if (element) {
+>>>>>>> Stashed changes
     if (element.ariaCurrent === "false" && current) {
       current.setAttribute("aria-current", "false");
       element.setAttribute("aria-current", "true");
@@ -119,3 +143,9 @@ button.addEventListener("click", () => {
 });
 
 list.appendChild(button);
+
+const dragDrop = () => {
+  Sortable.create(list, {});
+};
+
+document.addEventListener("DOMContentLoaded", dragDrop());

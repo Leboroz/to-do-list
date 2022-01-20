@@ -5,13 +5,20 @@
   "main": "index.js",
   "private": "true",
   "scripts": {
+<<<<<<< Updated upstream
     "start": "webpack-dev-server --stats-error-details --config webpack.dev.js --open",
     "build": "webpack --config webpack.prod.js",    
+=======
+    "start": "webpack-dev-server --config webpack.dev.js --open",
+    "build": "webpack --config webpack.prod.js",
+>>>>>>> Stashed changes
     "test": "jest --coverage"
   },
-  "jest":{
-    "testEnvironment": "jsdom"
-},
+  "jest": {
+    "testEnvironment": "jsdom",
+    "resetMocks": false,
+    "setupFiles": ["jest-localstorage-mock"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Leboroz/to-do-list.git"
@@ -37,6 +44,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.4",
     "jest": "^27.4.7",
+    "jest-localstorage-mock": "^2.4.18",
     "node-sass": "^7.0.1",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
