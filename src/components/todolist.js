@@ -20,6 +20,18 @@ export default class TodoList {
     return true;
   }
 
+  // static sortWithList(list) {
+  //   list.forEach((item, index) => {
+  //     const mainIndex = this.list.findIndex((todoItem) => {
+  //       console.log(todoItem, item);
+  //       todoItem.description === item;
+  //     });
+  //     const removed = this.list.splice(mainIndex, 1);
+
+  //   });
+  //   this.updateIndex();
+  // }
+
   static updateIndex() {
     this.list.forEach((item, index) => {
       item.id = index;

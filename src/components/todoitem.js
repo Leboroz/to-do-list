@@ -1,3 +1,5 @@
+import TodoList from "./todolist";
+
 export default class TodoItem {
   constructor(description, id, completed = false) {
     this.description = description;
@@ -11,7 +13,6 @@ export default class TodoItem {
     liElement.id = this.id;
     liElement.className = "list-item list-item__item";
     liElement.setAttribute("aria-current", "false");
-    liElement.setAttribute("draggable", "true");
     liElement.innerHTML = `<div class="wrapper">
       <input id="check"  class="checkbox" type="checkbox" name="completed">
       <label class="label">

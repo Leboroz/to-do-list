@@ -51,11 +51,9 @@ const changeIcon = (container) => {
 
   if (button.className.includes("fa-ellipsis-v")) {
     button.removeEventListener("click", deleteTodoItemHandler);
-    button.addEventListener("click", moveTodoItem);
   }
 
   if (button.className.includes("fa-trash-alt")) {
-    button.removeEventListener("click", moveTodoItem);
     button.addEventListener("click", deleteTodoItemHandler);
   }
 };
@@ -98,7 +96,25 @@ button.addEventListener("click", () => {
 list.appendChild(button);
 
 const dragDrop = () => {
-  Sortable.create(list, {});
+  new Sortable(list, {
+    animation: 150,
+    ghostClass: "blue-background-class",
+    handle: ".fa-ellipsis-v",
+    onEnd(e) {
+      let items = [...list.querySelectorAll(".list-item__item")];
+      items = items.map((item) => {
+        return {
+          name: item.querySelector(".todo-item-description").value,
+          check: item.querySelector(".checkbox").checked,
+        };
+      });
+      TodoList.list = items.map(
+        (item, index) => new TodoItem(item.name, index, item.check)
+      );
+      LocalStorage.update();
+      TodoList.update();
+    },
+  });
 };
 
 document.addEventListener("DOMContentLoaded", dragDrop());
