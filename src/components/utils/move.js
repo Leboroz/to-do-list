@@ -1,5 +1,3 @@
-const moveTodoItem = () => {
-  return "This will be a move event";
-};
+const moveTodoItem = () => 'This will be a move event';
 
 export default moveTodoItem;

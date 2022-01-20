@@ -1,4 +1,4 @@
-import TodoList from "../todolist";
+import TodoList from '../todolist';
 
 const deleteTodoItem = (container, index) => {
   container.remove();

@@ -1,4 +1,4 @@
-import TodoItem from "./todoitem";
+import TodoItem from './todoitem';
 
 export default class TodoList {
   static list = [];
