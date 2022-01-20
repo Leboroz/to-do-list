@@ -1,6 +1,6 @@
 import TodoList from "../todolist";
 
-const addToDOM = (list ,ele) => {
+const addToDOM = (list, ele) => {
   //* onchange event for the input
   const inputDescription = ele.querySelector("#todo_item_description");
 
@@ -19,7 +19,6 @@ const addToDOM = (list ,ele) => {
   const check = ele.querySelector("#check");
   const input = ele.querySelector("#todo_item_description"); // *list item input
   const elementIndex = TodoList.getFromId(Number(ele.id));
-  console.log(TodoList.list)
   const { completed } = TodoList.list[elementIndex];
   if (completed) {
     check.checked = true;
@@ -33,7 +32,7 @@ const addToDOM = (list ,ele) => {
   });
 
   list.insertBefore(ele, list.lastChild);
-  return true
+  return true;
 };
 
 export default addToDOM;
