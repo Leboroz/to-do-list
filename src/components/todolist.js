@@ -1,4 +1,4 @@
-import TodoItem from './todoitem';
+import TodoItem from "./todoitem";
 
 export default class TodoList {
   static list = [];
@@ -16,7 +16,14 @@ export default class TodoList {
   static remove(index) {
     if (index < 0) return false;
     this.list.splice(index, 1);
+    this.updateIndex();
     return true;
+  }
+
+  static updateIndex() {
+    this.list.forEach((item, index) => {
+      item.id = index;
+    });
   }
 
   //* get id of element

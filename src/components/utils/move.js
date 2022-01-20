@@ -1,3 +1,11 @@
-const moveTodoItem = () => 'This will be a move event';
+const draggStartHandler = (e) => {
+  const element = e.target;
+  element.classList.add("dragging");
+};
 
-export default moveTodoItem;
+const draggEndHandler = (e) => {
+  const element = e.target;
+  element.classList.remove("dragging");
+};
+
+export { draggStartHandler, draggEndHandler };

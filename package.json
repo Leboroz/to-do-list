@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": "true",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --open",
+    "start": "webpack-dev-server --stats-error-details --config webpack.dev.js --open",
     "build": "webpack --config webpack.prod.js",    
     "test": "jest --coverage"
   },

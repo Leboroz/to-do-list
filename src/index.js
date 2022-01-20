@@ -1,17 +1,18 @@
-import './sass/index.scss';
-import TodoList from './components/todolist';
-import deleteTodoItem from './components/utils/delete';
-import moveTodoItem from './components/utils/move';
-import LocalStorage from './components/local-storage';
-import TodoItem from './components/todoitem';
-import addToDOM from './components/utils/add';
+import "./sass/index.scss";
+import TodoList from "./components/todolist";
+import deleteTodoItem from "./components/utils/delete";
+import { draggEndHandler, draggStartHandler } from "./components/utils/move";
+import LocalStorage from "./components/local-storage";
+import TodoItem from "./components/todoitem";
+import addToDOM from "./components/utils/add";
+import { container } from "webpack";
 
-const list = document.querySelector('#list');
+const list = document.querySelector("#list");
 const localStorageList = LocalStorage.get();
 
 if (localStorageList && localStorageList.length > 0) {
   TodoList.list = localStorageList.map(
-    (item) => new TodoItem(item.description, item.id, item.completed),
+    (item) => new TodoItem(item.description, item.id, item.completed)
   );
   TodoList.uniqueId = TodoList.list[TodoList.list.length - 1].id + 1;
 
@@ -20,10 +21,10 @@ if (localStorageList && localStorageList.length > 0) {
     addToDOM(list, ele);
   });
 }
-const addInput = document.querySelector('#add_input');
+const addInput = document.querySelector("#add_input");
 
-addInput.addEventListener('keyup', (e) => {
-  if (e.key === 'Enter') {
+addInput.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
     //* if enter is pressed
     if (TodoList.addTodoItem(e.target.value, TodoList.uniqueId)) {
       TodoList.uniqueId += 1;
@@ -31,7 +32,7 @@ addInput.addEventListener('keyup', (e) => {
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
       addToDOM(list, ele);
       LocalStorage.update();
-      e.target.value = '';
+      e.target.value = "";
     }
   }
 });
@@ -39,56 +40,77 @@ addInput.addEventListener('keyup', (e) => {
 const deleteTodoItemHandler = (e) => {
   const container = e.target.parentNode.parentNode.parentNode;
   const index = Array.from(
-    document.querySelectorAll('.list-item__item'),
+    document.querySelectorAll(".list-item__item")
   ).indexOf(container);
   deleteTodoItem(container, index);
   LocalStorage.update();
 };
 
-const changeIcon = (container) => {
-  const button = container.querySelector('.fas');
-  button.classList.toggle('fa-ellipsis-v');
-  button.classList.toggle('fa-trash-alt');
+// const getDragAfterElement = (container, y) => {
+//   const todoItems = [
+//     ...container.querySelectorAll(".draggable:not(.dragging)"),
+//   ];
+//   todoItems.reduce(
+//     (closest, child) => {
+//       const metrics = child.getBoundingClientRect();
+//       console.log(metrics);
+//     },
+//     { offset: Number.POSITIVE_INFINITY }
+//   );
+// };
 
-  if (button.className.includes('fa-ellipsis-v')) {
-    button.removeEventListener('click', deleteTodoItemHandler);
-    button.addEventListener('click', moveTodoItem);
+list.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  const dragging = list.querySelector(".dragging");
+});
+
+const changeIcon = (container) => {
+  const button = container.querySelector(".fas");
+  console.log(button);
+  button.classList.toggle("fa-ellipsis-v");
+  button.classList.toggle("fa-trash-alt");
+
+  if (button.className.includes("fa-ellipsis-v")) {
+    button.removeEventListener("click", deleteTodoItemHandler);
+    container.addEventListener("dragstart", draggStartHandler);
+    container.addEventListener("dragend", draggEndHandler);
   }
 
-  if (button.className.includes('fa-trash-alt')) {
-    button.removeEventListener('click', moveTodoItem);
-    button.addEventListener('click', deleteTodoItemHandler);
+  if (button.className.includes("fa-trash-alt")) {
+    container.removeEventListener("dragstart", draggStartHandler);
+    container.removeEventListener("dragend", draggEndHandler);
+    button.addEventListener("click", deleteTodoItemHandler);
   }
 };
 
-document.addEventListener('click', (e) => {
-  const element = e.target.closest('.list-item__item');
+document.addEventListener("click", (e) => {
+  const element = e.target.closest(".list-item__item");
+  const input = e.target.closest(".todo-item-description");
   const current = list.querySelector('li[aria-current="true"]');
-
-  if (element) {
-    if (element.ariaCurrent === 'false' && current) {
-      current.setAttribute('aria-current', 'false');
-      element.setAttribute('aria-current', 'true');
+  if (input) {
+    if (element.ariaCurrent === "false" && current) {
+      current.setAttribute("aria-current", "false");
+      element.setAttribute("aria-current", "true");
       changeIcon(current);
       changeIcon(element);
-    } else if (element.ariaCurrent === 'false') {
-      element.setAttribute('aria-current', 'true');
+    } else if (element.ariaCurrent === "false") {
+      element.setAttribute("aria-current", "true");
       changeIcon(element);
     }
   } else if (current) {
-    current.setAttribute('aria-current', 'false');
+    current.setAttribute("aria-current", "false");
     changeIcon(current);
   }
 });
 
-const button = document.createElement('li');
-button.className = 'list-item list-item__button-wrapper';
+const button = document.createElement("li");
+button.className = "list-item list-item__button-wrapper";
 button.innerHTML = `
 <button class="btn" type="button">Clear all completed</button>`;
-button.addEventListener('click', () => {
-  const items = Array.from(list.querySelectorAll('.list-item__item'));
+button.addEventListener("click", () => {
+  const items = Array.from(list.querySelectorAll(".list-item__item"));
   items.forEach((element) => {
-    if (element.querySelector('#check').checked) {
+    if (element.querySelector("#check").checked) {
       const index = TodoList.getFromId(Number(element.id));
       deleteTodoItem(element, index);
     }

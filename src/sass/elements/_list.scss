@@ -7,6 +7,9 @@
   @media screen and (min-width: 992px) {
     width: 600px;
   }
+  .dragging {
+    opacity: 0.1;
+  }
 
   .list-item {
     width: 100%;
@@ -26,14 +29,6 @@
         display: flex;
         width: 100%;
         justify-content: space-between;
-        position: relative;
-
-        .fas {
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-        }
 
         .fa-ellipsis-v {
           cursor: grab;
