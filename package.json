@@ -6,9 +6,12 @@
   "private": "true",
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js --open",
-    "build": "webpack --config webpack.prod.js",
-    "compile:sass": "sass --watch src/sass:src/assets/css"
+    "build": "webpack --config webpack.prod.js",    
+    "test": "jest --coverage"
   },
+  "jest":{
+    "testEnvironment": "jsdom"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Leboroz/to-do-list.git"
@@ -27,11 +30,13 @@
   },
   "homepage": "https://github.com/Leboroz/to-do-list/docs#index.html",
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.4.7",
     "node-sass": "^7.0.1",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",

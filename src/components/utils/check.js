@@ -3,5 +3,6 @@ const checkHandler = (e, input) => {
   if (e.target.checked) input.setAttribute('disabled', 'true');
   //* if checkbox is not checked input is enabled
   else if (!e.target.checked) input.removeAttribute('disabled');
+  return input.getAttribute('disabled');
 };
 export default checkHandler;

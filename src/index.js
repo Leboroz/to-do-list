@@ -4,44 +4,10 @@ import deleteTodoItem from './components/utils/delete';
 import moveTodoItem from './components/utils/move';
 import LocalStorage from './components/local-storage';
 import TodoItem from './components/todoitem';
-import checkHandler from './components/utils/check';
+import addToDOM from './components/utils/add';
 
 const list = document.querySelector('#list');
 const localStorageList = LocalStorage.get();
-
-const appendEvents = (ele) => {
-  //* onchange event for the input
-  const inputDescription = ele.querySelector('#todo_item_description');
-
-  inputDescription.addEventListener('change', (e) => {
-    const elementIndex = TodoList.getFromId(Number(ele.id));
-    if (e.target.value === '') {
-      TodoList.removeFromId(Number(ele.id));
-      e.target.parentNode.parentNode.parentNode.remove();
-    } else if (e.target.value !== TodoList.list[elementIndex].description) {
-      TodoList.list[elementIndex].description = e.target.value;
-      LocalStorage.update();
-    }
-  });
-
-  //* checkbox event
-  const check = ele.querySelector('#check');
-  const input = ele.querySelector('#todo_item_description'); // *list item input
-  const elementIndex = TodoList.getFromId(Number(ele.id));
-  const { completed } = TodoList.list[elementIndex];
-  if (completed) {
-    check.checked = true;
-    input.setAttribute('disabled', 'true');
-  }
-
-  check.addEventListener('change', (e) => {
-    TodoList.check(elementIndex);
-    checkHandler(e, input);
-    LocalStorage.update();
-  });
-
-  list.insertBefore(ele, list.lastChild);
-};
 
 if (localStorageList && localStorageList.length > 0) {
   TodoList.list = localStorageList.map(
@@ -51,7 +17,7 @@ if (localStorageList && localStorageList.length > 0) {
 
   TodoList.list.forEach((item) => {
     const ele = item.createTodoElement();
-    appendEvents(ele);
+    addToDOM(list, ele);
   });
 }
 const addInput = document.querySelector('#add_input');
@@ -63,12 +29,21 @@ addInput.addEventListener('keyup', (e) => {
       TodoList.uniqueId += 1;
       //* last element from list
       const ele = TodoList.list[TodoList.list.length - 1].createTodoElement();
-      appendEvents(ele);
+      addToDOM(list, ele);
       LocalStorage.update();
       e.target.value = '';
     }
   }
 });
+
+const deleteTodoItemHandler = (e) => {
+  const container = e.target.parentNode.parentNode.parentNode;
+  const index = Array.from(
+    document.querySelectorAll('.list-item__item'),
+  ).indexOf(container);
+  deleteTodoItem(container, index);
+  LocalStorage.update();
+};
 
 const changeIcon = (container) => {
   const button = container.querySelector('.fas');
@@ -76,13 +51,13 @@ const changeIcon = (container) => {
   button.classList.toggle('fa-trash-alt');
 
   if (button.className.includes('fa-ellipsis-v')) {
-    button.removeEventListener('click', deleteTodoItem);
+    button.removeEventListener('click', deleteTodoItemHandler);
     button.addEventListener('click', moveTodoItem);
   }
 
   if (button.className.includes('fa-trash-alt')) {
     button.removeEventListener('click', moveTodoItem);
-    button.addEventListener('click', deleteTodoItem);
+    button.addEventListener('click', deleteTodoItemHandler);
   }
 };
 
@@ -114,8 +89,8 @@ button.addEventListener('click', () => {
   const items = Array.from(list.querySelectorAll('.list-item__item'));
   items.forEach((element) => {
     if (element.querySelector('#check').checked) {
-      TodoList.removeFromId(Number(element.id));
-      element.remove();
+      const index = TodoList.getFromId(Number(element.id));
+      deleteTodoItem(element, index);
     }
   });
   LocalStorage.update();
