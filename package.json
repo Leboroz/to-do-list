@@ -10,9 +10,7 @@
     "test": "jest --coverage"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "resetMocks": false,
-    "setupFiles": ["jest-localstorage-mock"]
+    "testEnvironment": "jsdom"
   },
   "repository": {
     "type": "git",
@@ -53,6 +51,7 @@
   },
   "dependencies": {
     "html-webpack-plugin": "^5.5.0",
+    "sortablejs": "^1.14.0",
     "webpack-merge": "^5.8.0"
   }
 }
