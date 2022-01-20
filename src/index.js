@@ -73,24 +73,11 @@ list.addEventListener("dragover", (e) => {
 
 const changeIcon = (container) => {
   const button = container.querySelector(".fas");
-<<<<<<< Updated upstream
-  console.log(button);
-=======
->>>>>>> Stashed changes
   button.classList.toggle("fa-ellipsis-v");
   button.classList.toggle("fa-trash-alt");
 
   if (button.className.includes("fa-ellipsis-v")) {
     button.removeEventListener("click", deleteTodoItemHandler);
-<<<<<<< Updated upstream
-    container.addEventListener("dragstart", draggStartHandler);
-    container.addEventListener("dragend", draggEndHandler);
-  }
-
-  if (button.className.includes("fa-trash-alt")) {
-    container.removeEventListener("dragstart", draggStartHandler);
-    container.removeEventListener("dragend", draggEndHandler);
-=======
     button.addEventListener("click", moveTodoItem);
   }
 
@@ -103,15 +90,9 @@ const changeIcon = (container) => {
 
 document.addEventListener("click", (e) => {
   const element = e.target.closest(".list-item__item");
-<<<<<<< Updated upstream
-  const input = e.target.closest(".todo-item-description");
-  const current = list.querySelector('li[aria-current="true"]');
-  if (input) {
-=======
   const current = list.querySelector('li[aria-current="true"]');
 
   if (element) {
->>>>>>> Stashed changes
     if (element.ariaCurrent === "false" && current) {
       current.setAttribute("aria-current", "false");
       element.setAttribute("aria-current", "true");
