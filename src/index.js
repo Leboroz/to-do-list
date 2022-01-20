@@ -1,18 +1,10 @@
 import "./sass/index.scss";
 import TodoList from "./components/todolist";
 import deleteTodoItem from "./components/utils/delete";
-<<<<<<< Updated upstream
-import { draggEndHandler, draggStartHandler } from "./components/utils/move";
-import LocalStorage from "./components/local-storage";
-import TodoItem from "./components/todoitem";
-import addToDOM from "./components/utils/add";
-import { container } from "webpack";
-=======
 import moveTodoItem from "./components/utils/move";
 import LocalStorage from "./components/local-storage";
 import TodoItem from "./components/todoitem";
 import addToDOM from "./components/utils/add";
->>>>>>> Stashed changes
 
 const list = document.querySelector("#list");
 const localStorageList = LocalStorage.get();
@@ -83,7 +75,6 @@ const changeIcon = (container) => {
 
   if (button.className.includes("fa-trash-alt")) {
     button.removeEventListener("click", moveTodoItem);
->>>>>>> Stashed changes
     button.addEventListener("click", deleteTodoItemHandler);
   }
 };
