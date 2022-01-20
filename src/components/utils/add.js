@@ -1,14 +1,10 @@
 import TodoList from "../todolist";
 import LocalStorage from "../local-storage";
 import checkHandler from "./check";
-import { draggEndHandler, draggStartHandler } from "./move";
 
 const addToDOM = (list, ele) => {
   //* onchange event for the input
   const inputDescription = ele.querySelector("#todo_item_description");
-
-  list.addEventListener("dragstart", draggStartHandler);
-  list.addEventListener("dragend", draggEndHandler);
 
   inputDescription.addEventListener("change", (e) => {
     const elementIndex = TodoList.getFromId(Number(ele.id));

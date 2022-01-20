@@ -1,7 +1,6 @@
 import "./sass/index.scss";
 import TodoList from "./components/todolist";
 import deleteTodoItem from "./components/utils/delete";
-import moveTodoItem from "./components/utils/move";
 import LocalStorage from "./components/local-storage";
 import TodoItem from "./components/todoitem";
 import addToDOM from "./components/utils/add";
@@ -44,24 +43,6 @@ const deleteTodoItemHandler = (e) => {
   deleteTodoItem(container, index);
   LocalStorage.update();
 };
-
-// const getDragAfterElement = (container, y) => {
-//   const todoItems = [
-//     ...container.querySelectorAll(".draggable:not(.dragging)"),
-//   ];
-//   todoItems.reduce(
-//     (closest, child) => {
-//       const metrics = child.getBoundingClientRect();
-//       console.log(metrics);
-//     },
-//     { offset: Number.POSITIVE_INFINITY }
-//   );
-// };
-
-list.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  const dragging = list.querySelector(".dragging");
-});
 
 const changeIcon = (container) => {
   const button = container.querySelector(".fas");
