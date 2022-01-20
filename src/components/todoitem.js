@@ -12,13 +12,13 @@ export default class TodoItem {
     liElement.className = 'list-item list-item__item';
     liElement.setAttribute('aria-current', 'false');
     liElement.innerHTML = `<div class="wrapper">
-    <input id="check"  class="checkbox" type="checkbox" name="completed">
-    <label class="label">
-      <input id="todo_item_description" class="todo-item-description" name="todoItemDescription" type="text" value="${this.description}">
-      <i class="fas fa-ellipsis-v"></i>
-    </label>
-  </div>
-  `;
+      <input id="check"  class="checkbox" type="checkbox" name="completed">
+      <label class="label">
+        <input id="todo_item_description" class="todo-item-description" name="todoItemDescription" type="text" value="${this.description}">
+        <i class="fas fa-ellipsis-v"></i>
+      </label>
+    </div>
+    `;
     return liElement;
   }
 }

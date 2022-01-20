@@ -1,10 +1,11 @@
 import './sass/index.scss';
+import Sortable from 'sortablejs';
 import TodoList from './components/todolist';
 import deleteTodoItem from './components/utils/delete';
-import moveTodoItem from './components/utils/move';
 import LocalStorage from './components/local-storage';
 import TodoItem from './components/todoitem';
 import addToDOM from './components/utils/add';
+import sortAndUpdate from './components/utils/sort-and-update';
 
 const list = document.querySelector('#list');
 const localStorageList = LocalStorage.get();
@@ -52,11 +53,9 @@ const changeIcon = (container) => {
 
   if (button.className.includes('fa-ellipsis-v')) {
     button.removeEventListener('click', deleteTodoItemHandler);
-    button.addEventListener('click', moveTodoItem);
   }
 
   if (button.className.includes('fa-trash-alt')) {
-    button.removeEventListener('click', moveTodoItem);
     button.addEventListener('click', deleteTodoItemHandler);
   }
 };
@@ -97,3 +96,23 @@ button.addEventListener('click', () => {
 });
 
 list.appendChild(button);
+
+const dragDrop = () => {
+  Sortable.create(list, {
+    animation: 150,
+    ghostClass: 'blue-background-class',
+    handle: '.fa-ellipsis-v',
+    onEnd() {
+      let items = [...list.querySelectorAll('.list-item__item')];
+      items = items.map((item) => ({
+        name: item.querySelector('.todo-item-description').value,
+        check: item.querySelector('.checkbox').checked,
+      }));
+      sortAndUpdate(items, TodoList.list);
+      TodoList.update();
+      LocalStorage.update();
+    },
+  });
+};
+
+document.addEventListener('DOMContentLoaded', dragDrop());

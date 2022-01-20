@@ -16,7 +16,26 @@ export default class TodoList {
   static remove(index) {
     if (index < 0) return false;
     this.list.splice(index, 1);
+    this.updateIndex();
     return true;
+  }
+
+  // static sortWithList(list) {
+  //   list.forEach((item, index) => {
+  //     const mainIndex = this.list.findIndex((todoItem) => {
+  //       console.log(todoItem, item);
+  //       todoItem.description === item;
+  //     });
+  //     const removed = this.list.splice(mainIndex, 1);
+
+  //   });
+  //   this.updateIndex();
+  // }
+
+  static updateIndex() {
+    this.list.forEach((item, index) => {
+      item.id = index;
+    });
   }
 
   //* get id of element
