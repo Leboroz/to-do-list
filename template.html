@@ -25,22 +25,28 @@
     />
     <script src="./src/index.js" defer></script>
   </head>
-  <body>
-    <ul id="list" class="list">
-      <li class="list-item">
-        <p>Today's To Do</p>
-        <i class="fas fa-sync-alt"></i>
-      </li>
-      <li class="list-item">
-        <label>
-          <input
-            id="add_input"
-            class="add-item"
-            type="text"
-            placeholder="Add to your list..."
-          />
-        </label>
-      </li>
-    </ul>
-  </body>
+    <body>
+      <section class="body">
+        <div class="clock-container">
+          <span class="clock-element clock-element__clock"></span>
+          <span class="clock-element clock-element__date"></span>
+        </div>
+        <ul id="list" class="list">
+          <li class="list-item">
+            <p>Today's To Do</p>
+            <i class="fas fa-sync-alt"></i>
+          </li>
+          <li class="list-item">
+            <label>
+              <input
+                id="add_input"
+                class="add-item"
+                type="text"
+                placeholder="Add to your list..."
+              />
+            </label>
+          </li>
+        </ul>
+      </section>
+    </body>
 </html>

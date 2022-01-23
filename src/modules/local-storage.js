@@ -1,4 +1,4 @@
-import TodoList from './todolist';
+import TodoList from "./todolist";
 
 export default class LocalStorage {
   //* creates list in local storage
@@ -8,11 +8,11 @@ export default class LocalStorage {
       return;
     }
     const stringedList = JSON.stringify(TodoList.list);
-    localStorage.setItem('list', stringedList);
+    localStorage.setItem("list", stringedList);
   }
 
   //* gets list in local storage
   static get() {
-    return JSON.parse(localStorage.getItem('list'));
+    return JSON.parse(localStorage.getItem("list"));
   }
 }

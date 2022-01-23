@@ -7,10 +7,10 @@ export default class TodoItem {
 
   // *Creates an item element to append to the DOM
   createTodoElement() {
-    const liElement = document.createElement('li');
+    const liElement = document.createElement("li");
     liElement.id = this.id;
-    liElement.className = 'list-item list-item__item';
-    liElement.setAttribute('aria-current', 'false');
+    liElement.className = "list-item list-item__item";
+    liElement.setAttribute("aria-current", "false");
     liElement.innerHTML = `<div class="wrapper">
       <input id="check"  class="checkbox" type="checkbox" name="completed">
       <label class="label">
